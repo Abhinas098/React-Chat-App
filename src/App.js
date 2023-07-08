@@ -4,6 +4,7 @@ import Nav from "./component/layout/Nav";
 import Register from "./component/Auth/Register";
 import Home from "./component/pages/Home";
 import { Redirect } from "react-router-dom/cjs/react-router-dom";
+import Login from "./component/Auth/Login";
 
 function App() {
   return (
@@ -15,6 +16,9 @@ function App() {
         </Route>
         <Route path="/register" exact>
           <Register />
+        </Route>
+        <Route path="/login" exact>
+          <Login />
         </Route>
         <Route path="/home" exact>
           <Home />
