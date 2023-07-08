@@ -1,11 +1,25 @@
+import { Route, Switch } from "react-router-dom";
 import "./App.css";
 import Nav from "./component/layout/Nav";
+import Register from "./component/Auth/Register";
+import Home from "./component/pages/Home";
+import { Redirect } from "react-router-dom/cjs/react-router-dom";
 
 function App() {
   return (
     <>
       <Nav />
-      <h2>React Chat App</h2>
+      <Switch>
+        <Route path="/" exact>
+          <Redirect to="register" />
+        </Route>
+        <Route path="/register" exact>
+          <Register />
+        </Route>
+        <Route path="/home" exact>
+          <Home />
+        </Route>
+      </Switch>
     </>
   );
 }
