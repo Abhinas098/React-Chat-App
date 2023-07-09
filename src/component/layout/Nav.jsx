@@ -1,6 +1,20 @@
-import React from "react";
+import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
+import { signOut } from "firebase/auth";
+import { auth, db } from "../../firebase";
+import { doc, updateDoc } from "firebase/firestore";
+import { AuthContext } from "../../store/AuthCtx";
+import { useHistory } from "react-router-dom";
+
 const Nav = () => {
+  let user = useContext(AuthContext);
+  const history = useHistory();
+
+  const logoutHandler = async () => {
+    await updateDoc(doc(db, "users", auth.currentUser.uid), { online: false });
+    await signOut(auth);
+    history.push("login");
+  };
   return (
     <>
       <div className="nav">
@@ -8,8 +22,17 @@ const Nav = () => {
           <NavLink to="/">Chat App</NavLink>
         </h2>
         <div>
-          <NavLink to="register">Register</NavLink>
-          <NavLink to="login">Login</NavLink>
+          {user.isLogin ? (
+            <>
+              <NavLink to="profile">Profile</NavLink>
+              <button onClick={logoutHandler}>Logout</button>
+            </>
+          ) : (
+            <>
+              <NavLink to="register">Register</NavLink>
+              <NavLink to="login">Login</NavLink>
+            </>
+          )}
           <button>dark</button>
         </div>
       </div>

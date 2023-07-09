@@ -5,24 +5,46 @@ import Register from "./component/Auth/Register";
 import Home from "./component/pages/Home";
 import { Redirect } from "react-router-dom/cjs/react-router-dom";
 import Login from "./component/Auth/Login";
+import { useContext } from "react";
+import { AuthContext } from "./store/AuthCtx";
 
 function App() {
+  const {isLogin}= useContext(AuthContext);
   return (
     <>
       <Nav />
       <Switch>
-        <Route path="/" exact>
-          <Redirect to="register" />
-        </Route>
-        <Route path="/register" exact>
-          <Register />
-        </Route>
-        <Route path="/login" exact>
-          <Login />
-        </Route>
-        <Route path="/home" exact>
-          <Home />
-        </Route>
+        {!isLogin && (
+          <Route path="/" exact>
+            <Redirect to="register" />
+          </Route>
+        )}
+
+        {!isLogin && (
+          <Route path="/register" exact>
+            <Register />
+          </Route>
+        )}
+        {!isLogin && (
+          <Route path="/login" exact>
+            <Login />
+          </Route>
+        )}
+        {isLogin && (
+          <Route path="/home" exact>
+            <Home />
+          </Route>
+        )}
+        {isLogin && (
+          <Route path="*" exact>
+            <Redirect to="profile" />
+          </Route>
+        )}
+        {!isLogin && (
+          <Route path="*" exact>
+            <Redirect to="/" />
+          </Route>
+        )}
       </Switch>
     </>
   );
