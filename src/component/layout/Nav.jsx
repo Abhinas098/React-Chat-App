@@ -5,6 +5,7 @@ import { auth, db } from "../../firebase";
 import { doc, updateDoc } from "firebase/firestore";
 import { AuthContext } from "../../store/AuthCtx";
 import { useHistory } from "react-router-dom";
+import Logout from "../Icons/Logout";
 
 const Nav = () => {
   let user = useContext(AuthContext);
@@ -25,15 +26,15 @@ const Nav = () => {
           {user.isLogin ? (
             <>
               <NavLink to="profile">Profile</NavLink>
-              <button onClick={logoutHandler}>Logout</button>
+              <Logout onClick={logoutHandler}></Logout>
             </>
           ) : (
             <>
               <NavLink to="register">Register</NavLink>
               <NavLink to="login">Login</NavLink>
+              <button>dark</button>
             </>
           )}
-          <button>dark</button>
         </div>
       </div>
     </>

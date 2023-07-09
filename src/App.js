@@ -9,6 +9,7 @@ import { useContext } from "react";
 import { AuthContext } from "./store/AuthCtx";
 import PublicRoute from "./component/Routes/PublicRoute";
 import PrivateRoute from "./component/Routes/PrivateRoute";
+import Profile from "./component/pages/Profile";
 
 function App() {
 
@@ -30,6 +31,10 @@ function App() {
 
         <PrivateRoute path="/home" exact>
           <Home />
+        </PrivateRoute>
+
+        <PrivateRoute path="/profile" exact>
+          <Profile />
         </PrivateRoute>
 
         <PrivateRoute path="*" exact>
