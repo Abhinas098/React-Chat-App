@@ -9,10 +9,13 @@ import {
   deleteObject,
 } from "firebase/storage";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
+import Delete from "../Icons/Delete";
+import { useHistory } from "react-router-dom";
 
 const Profile = () => {
   const [photo, setPhoto] = useState("");
   const [user, setUser] = useState("");
+  const history = useHistory();
 
   useEffect(() => {
     getDoc(doc(db, "users", auth.currentUser.uid)).then((docs) => {
@@ -48,6 +51,23 @@ const Profile = () => {
     }
   }, [photo]);
 
+  // Delete picture
+  const deleteHandler = async () => {
+    try {
+      const confirm = window.confirm("Delete Profile Picture ?");
+      if (confirm) {
+        await deleteObject(ref(storage, user.imgPath));
+        await updateDoc(doc(db, "users", auth.currentUser.uid), {
+          img: "",
+          imgPath: "",
+        });
+        history.push("home");
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   return user ? (
     <div className="card">
       <div className="Profile">
@@ -58,6 +78,7 @@ const Profile = () => {
               <label htmlFor="photo">
                 <Camera />
               </label>
+              {user.img && <Delete onDelete={deleteHandler} />}
               <input
                 type="file"
                 accept="image/"
