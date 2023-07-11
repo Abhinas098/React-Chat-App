@@ -26,7 +26,7 @@ const Nav = () => {
           {user.isLogin ? (
             <>
               <NavLink to="profile">Profile</NavLink>
-              <Logout onClick={logoutHandler}></Logout>
+              <Logout onLogout={logoutHandler}></Logout>
             </>
           ) : (
             <>

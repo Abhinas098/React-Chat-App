@@ -129,3 +129,51 @@
   display: none;
   cursor: pointer;
 }
+.home {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  overflow: hidden;
+  height: calc(100vh - 70px);
+  width: 100vw;
+}
+.user {
+  margin-top: 10px;
+  border-right: 2px solid rgb(74, 71, 71);
+  overflow-y: auto;
+}
+
+.wraper {
+  margin-bottom: 10px;
+  padding: 10px;
+  cursor: pointer;
+}
+.info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.user_details {
+  display: flex;
+  align-items: center;
+}
+.user_details h4 {
+  margin-left: 10px;
+}
+.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 1px solid rgb(79, 79, 82);
+}
+.user_status {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+.online {
+  background: #34eb52;
+}
+.offline {
+  background: red;
+}

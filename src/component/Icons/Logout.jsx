@@ -1,8 +1,9 @@
 import React from "react";
 
-const Logout = () => {
+const Logout = ({ onLogout }) => {
   return (
     <svg
+      onClick={onLogout}
       xmlns="http://www.w3.org/2000/svg"
       style={{
         height: "25px",
