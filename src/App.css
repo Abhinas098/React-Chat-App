@@ -177,3 +177,17 @@
 .offline {
   background: red;
 }
+
+.messages {
+  position:relative;
+  width: 100%;
+}
+.user_nm {
+  padding: 10px;
+  text-align: center;
+  border-bottom: 2px solid rgb(100, 98, 98);
+}
+.not {
+  font-size: 20px;
+  text-align: center;
+}

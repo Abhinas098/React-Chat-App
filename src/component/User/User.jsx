@@ -1,9 +1,9 @@
 import React from "react";
 import img from "../../user.png";
 
-const User = ({ user }) => {
+const User = ({ user, onSelectUser }) => {
   return (
-    <div className="wraper">
+    <div className="wraper" onClick={() => onSelectUser(user)}>
       <div className="info">
         <div className="user_details">
           <img src={user.img || img} alt="img" className="avatar" />
