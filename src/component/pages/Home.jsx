@@ -7,16 +7,19 @@ import {
   onSnapshot,
   Timestamp,
   addDoc,
+  orderBy,
 } from "firebase/firestore";
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import User from "../User/User";
 import MessageForm from "../User/MessageForm";
+import Message from "../User/Message";
 
 const Home = () => {
   const [users, setUsers] = useState([]);
   const [chat, setChat] = useState("");
   const [text, setText] = useState("");
   const [img, setImg] = useState("");
+  const [msg, setMsg] = useState([]);
 
   const user1 = auth.currentUser.uid;
   useEffect(() => {
@@ -37,7 +40,23 @@ const Home = () => {
 
   const selectUserHandler = (user) => {
     setChat(user);
+
+    const user2 = user.uid;
+    const id = user1 > user2 ? `${user1 + user2}` : `${user2 + user1}`;
+
+    const msgRef = collection(db, "messages", id, "chat");
+    const qry = query(msgRef, orderBy("createdOn", "asc"));
+
+    onSnapshot(qry, (querySnap) => {
+      let msgs = [];
+      querySnap.forEach((doc) => {
+        msgs.push(doc.data());
+      });
+
+      setMsg(msgs);
+    });
   };
+
   const submitHandler = async (e) => {
     e.preventDefault();
     const user2 = chat.uid;
@@ -75,8 +94,17 @@ const Home = () => {
           {chat ? (
             <>
               <div className="user_nm">
-                <h3>{chat.name}</h3>
+                <h3>{chat.name ? chat.name : chat.email}</h3>
               </div>
+
+              <div className="message">
+                {msg.length
+                  ? msg.map((msg, i) => (
+                      <Message key={i} msg={msg} user1={user1} />
+                    ))
+                  : null}
+              </div>
+
               <MessageForm
                 submitHandler={submitHandler}
                 text={text}
