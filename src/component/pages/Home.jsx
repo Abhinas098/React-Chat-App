@@ -8,6 +8,10 @@ import {
   Timestamp,
   addDoc,
   orderBy,
+  setDoc,
+  doc,
+  getDoc,
+  updateDoc,
 } from "firebase/firestore";
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import User from "../User/User";
@@ -38,7 +42,7 @@ const Home = () => {
     return () => onSnap;
   }, []);
 
-  const selectUserHandler = (user) => {
+  const selectUserHandler = async (user) => {
     setChat(user);
 
     const user2 = user.uid;
@@ -55,6 +59,12 @@ const Home = () => {
 
       setMsg(msgs);
     });
+
+    // lastMessages
+    const docSnap = await getDoc(doc(db, "lastMsg", id));
+    if (docSnap.data() && docSnap.data().from !== user1) {
+      await updateDoc(doc(db, "lastMsg", id), { unread: false });
+    }
   };
 
   const submitHandler = async (e) => {
@@ -79,7 +89,18 @@ const Home = () => {
       createdOn: Timestamp.fromDate(new Date()),
       media: url || "",
     });
+
+    await setDoc(doc(db, "lastMsg", id), {
+      text,
+      from: user1,
+      to: user2,
+      createdOm: Timestamp.fromDate(new Date()),
+      media: url || "",
+      unread: true,
+    });
+
     setText("");
+    setImg("");
   };
 
   return (
@@ -87,7 +108,13 @@ const Home = () => {
       <div className="home">
         <div className="user">
           {users.map((user) => (
-            <User key={user.uid} user={user} onSelectUser={selectUserHandler} />
+            <User
+              key={user.uid}
+              user={user}
+              onSelectUser={selectUserHandler}
+              user1={user1}
+              chat={chat}
+            />
           ))}
         </div>
         <div className="messages">
