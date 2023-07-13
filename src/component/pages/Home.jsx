@@ -32,7 +32,6 @@ const Home = () => {
     const querys = query(users, where("uid", "not-in", [user1]));
 
     const onSnap = onSnapshot(querys, (querySnap) => {
-      console.log(querySnap);
       let users = [];
       querySnap.forEach((docs) => {
         users.push(docs.data());

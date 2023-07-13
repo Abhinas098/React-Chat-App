@@ -41,6 +41,16 @@ const User = ({ user, onSelectUser, user1, chat }) => {
           </p>
         )}
       </div>
+
+      {/* small screen */}
+      <div
+        onClick={() => onSelectUser(user)}
+        className={`sm_container ${chat.name === user.name && "selectedUser"}`}
+      >
+        <div className="absolute">
+          <img src={user.img || img} alt="image" className="avatar sm_screen" />
+        </div>
+      </div>
     </>
   );
 };

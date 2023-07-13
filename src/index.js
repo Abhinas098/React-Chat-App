@@ -5,14 +5,17 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import AuthProvider from "./store/AuthCtx";
+import ThemeProvider from "./store/ThemeCtx";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <AuthProvider>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </AuthProvider>
+  <ThemeProvider>
+    <AuthProvider>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </AuthProvider>
+  </ThemeProvider>
 );
 
 reportWebVitals();
